@@ -13,9 +13,15 @@ function kokiInit(data, container, openDetails = true, kokiTitle = 'koki') {
 
   const ul = document.createElement('ul')
 
-  container.appendChild(details)
-  details.appendChild(summary)
-  details.appendChild(dataElem)
+  const code = document.createElement('code')
+  code.innerHTML = JSON.stringify(data, null, 2)
+
+  const pre = document.createElement('pre')
+
+  container.append(details)
+  pre.appendChild(code)
+  details.innerHTML = `<label><input type="checkbox">Raw JSON</label>`
+  details.append(summary, pre, dataElem)
   dataElem.appendChild(ul)
 
   kokiArbol(data, ul, '', false, openDetails)

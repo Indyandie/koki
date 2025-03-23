@@ -9,10 +9,10 @@ function createJsonTree(data, container) {
   container.appendChild(details)
   details.appendChild(summary)
   details.appendChild(ul)
-  buildTree(data, ul, '')
+  kokiArbol(data, ul, '')
 }
 
-function buildTree(data, parentUl, keyName = null, parentArr = false) {
+function kokiArbol(data, parentUl, keyName = null, parentArr = false) {
   if (typeof data === 'object' && data !== null) {
     const li = document.createElement('li')
     parentUl.appendChild(li)
@@ -40,10 +40,10 @@ function buildTree(data, parentUl, keyName = null, parentArr = false) {
     const ul = document.createElement('ul')
     for (const [key, value] of entries) {
       if (typeof value === 'object' && data !== null) {
-        buildTree(value, ul, key, isArray)
+        kokiArbol(value, ul, key, isArray)
       } else {
         const liEntry = document.createElement('li')
-        const format = formatValue(value)
+        const format = kokiGetType(value)
 
         liEntry.className = 'arbol-type' - format
         liEntry.innerHTML = `${isArray ? '' : '<var>' + key + ':</var> '}<code class="arbol-value ${format}">${value}</code> (${format})`
@@ -54,7 +54,6 @@ function buildTree(data, parentUl, keyName = null, parentArr = false) {
   }
 }
 
-function formatValue(value) {
   if (typeof value === 'string') {
     return `string`
   } else if (typeof value === 'number') {
@@ -65,5 +64,5 @@ function formatValue(value) {
     return 'null'
   } else {
     return 'undefined'
-  }
+function kokiGetType(value) {
 }

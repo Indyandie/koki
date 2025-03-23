@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Tree Viewer</title>
+  </head>
+  <body>
+    <h1>Genesis</h1>
+    <div id="json-tree">Hello</div>
+
+    <script>
+      function createJsonTree(data, container) {
+        const ul = document.createElement('ul')
+        ul.className = 'json-tree'
+        container.innerHTML = ''
+        container.appendChild(ul)
+        buildTree(data, ul)
+      }
+
+      function buildTree(data, parentUl) {
+        if (typeof data === 'object' && data !== null) {
+          const isArray = Array.isArray(data)
+          const entries = isArray ? data.entries() : Object.entries(data)
+          for (const [key, value] of entries) {
+            const li = document.createElement('li')
+            li.className = 'json-node'
+            parentUl.appendChild(li)
+
+            const toggle = document.createElement('span')
+            toggle.className = 'json-toggle'
+            toggle.textContent = isArray ? '[...]' : '{...}'
+            li.appendChild(toggle)
+
+            if (!isArray) {
+              const keySpan = document.createElement('span')
+              keySpan.className = 'json-key'
+              keySpan.textContent = `"${key}": `
+              li.appendChild(keySpan)
+            }
+
+            const valueContainer = document.createElement('span')
+            valueContainer.className = 'json-value'
+            li.appendChild(valueContainer)
+
+            if (typeof value === 'object' && value !== null) {
+              const childUl = document.createElement('ul')
+              childUl.className = 'json-tree hidden'
+              li.appendChild(childUl)
+              buildTree(value, childUl)
+              toggle.addEventListener('click', () => {
+                childUl.classList.toggle('hidden')
+                toggle.textContent = childUl.classList.contains('hidden')
+                  ? (isArray ? '[...]' : '{...}')
+                  : (isArray ? '[-]' : '{-}')
+              })
+            } else {
+              valueContainer.textContent = formatValue(value)
+              toggle.classList.add('hidden')
+            }
+          }
+        }
+      }
+
+      function formatValue(value) {
+        if (typeof value === 'string') {
+          return `"${value}"`
+        } else if (typeof value === 'number') {
+          return value.toString()
+        } else if (typeof value === 'boolean') {
+          return value.toString()
+        } else if (value === null) {
+          return 'null'
+        } else {
+          return 'undefined'
+        }
+      }
+
+      // Basic CSS
+      const style = document.createElement('style')
+      style.textContent = `
+      .json-tree {
+        list-style: none;
+        padding-left: 20px;
+      }
+      .json-node {
+        margin: 2px 0;
+      }
+      .json-toggle {
+        cursor: pointer;
+        margin-right: 5px;
+      }
+      .json-key {
+        color: #a626a4; /* Purple for keys */
+      }
+      .json-value {
+        color: #50a14f; /* Green for strings */
+      }
+      .json-value.number {
+        color: #986801; /* Brown for numbers */
+      }
+      .json-value.boolean, .json-value.null {
+        color: #c18401; /* Orange for booleans and null */
+      }
+      .hidden {
+        display: none;
+      }
+    `
+      document.head.appendChild(style)
+
+      // Example usage
+      const data = {
+        name: 'John',
+        alive: true,
+        age: 30,
+        address: {
+          street: '123 Main St',
+          city: 'Anytown',
+          state: 'CA',
+        },
+        phones: [
+          { type: 'home', number: '555-1234' },
+          { type: 'work', number: '555-5678' },
+        ],
+      }
+
+      const container = document.getElementById('json-tree')
+      createJsonTree(data, container)
+    </script>
+  </body>
+</html>

@@ -54,15 +54,8 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false) {
   }
 }
 
-  if (typeof value === 'string') {
-    return `string`
-  } else if (typeof value === 'number') {
-    return 'number'
-  } else if (typeof value === 'boolean') {
-    return 'boolean'
-  } else if (value === null) {
-    return 'null'
-  } else {
-    return 'undefined'
 function kokiGetType(value) {
+  if (value === null) return 'null'
+  if (value === undefined) return 'undefined'
+  return typeof value
 }

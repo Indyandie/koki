@@ -6,131 +6,101 @@
     <title>JSON Tree Viewer</title>
   </head>
   <body>
-    <h1>V3</h1>
-    <div id="json-tree"></div>
+    <h1>Refactor</h1>
+    <div id="json-tree">Hello</div>
 
     <script>
-      // Creates the JSON tree and attaches it to the container
       function createJsonTree(data, container) {
+        const ul = document.createElement('ul')
         const details = document.createElement('details')
-        details.className = 'json-tree'
-        details.open = true // Open by default for top level
-        container.appendChild(details)
-        buildTree(data, details)
-      }
-
-      // Builds the tree based on the data type
-      function buildTree(data, parentDetails) {
         const summary = document.createElement('summary')
-        summary.className = 'json-summary'
-        parentDetails.appendChild(summary)
-
-        if (Array.isArray(data)) {
-          summary.textContent = `[Array (${data.length})]`
-          buildArrayTree(data, parentDetails)
-        } else if (typeof data === 'object' && data !== null) {
-          const keys = Object.keys(data)
-          summary.textContent = `{Object (${keys.length})}`
-          buildObjectTree(data, parentDetails)
-        } else {
-          summary.textContent = formatValue(data)
-          summary.classList.add('json-leaf')
-        }
+        summary.innerHTML = 'Arbol (root)'
+        details.open = true
+        ul.className = 'json-tree'
+        ul.className = 'json-tree'
+        container.innerHTML = ''
+        container.appendChild(details)
+        details.appendChild(summary)
+        details.appendChild(ul)
+        buildTree(data, ul)
       }
 
-      // Handles array elements
-      function buildArrayTree(array, parentDetails) {
-        array.forEach((item, index) => {
-          const details = document.createElement('details')
-          details.className = 'json-node'
-          parentDetails.appendChild(details)
+      function buildTree(data, parentUl) {
+        if (typeof data === 'object' && data !== null) {
+          const isArray = Array.isArray(data)
+          const entries = isArray ? data.entries() : Object.entries(data)
 
-          const summary = document.createElement('summary')
-          summary.className = 'json-summary'
-          summary.textContent = `[${index}]`
+          for (const [key, value] of entries) {
+            const details = document.createElement('details')
+            details.className = 'json-node'
+            parentUl.appendChild(details)
 
-          if (typeof item === 'object' && item !== null) {
-            summary.appendChild(document.createTextNode(` ${getTypeLabel(item)}`))
-            buildTree(item, details)
-          } else {
-            const valueSpan = document.createElement('span')
-            valueSpan.className = `json-value ${getTypeClass(item)}`
-            valueSpan.textContent = formatValue(item)
-            summary.appendChild(valueSpan) // Show value directly in summary
-          }
-        })
-      }
+            const summary = document.createElement('summary')
+            summary.className = 'json-summary'
+            // summary.textContent = isArray ? '[...]' : '{...}'
+            details.appendChild(summary)
 
-      // Handles object properties
-      function buildObjectTree(obj, parentDetails) {
-        for (const [key, value] of Object.entries(obj)) {
-          const details = document.createElement('details')
-          details.className = 'json-node'
-          parentDetails.appendChild(details)
+            if (!isArray) {
+              const keySpan = document.createElement('var')
+              keySpan.className = 'json-key'
+              keySpan.textContent = `"${key} {Obj} ${Object.keys(value).length}"`
+              summary.appendChild(keySpan)
+            } else {
+              const keySpan = document.createElement('var')
+              keySpan.className = 'json-key'
+              keySpan.textContent = `"[Array] ${data.length}"`
+              summary.appendChild(keySpan)
+            }
 
-          const summary = document.createElement('summary')
-          summary.className = 'json-summary'
-          const keyCode = document.createElement('code')
-          keyCode.className = 'json-key'
-          keyCode.textContent = `"${key}":`
-          summary.appendChild(keyCode)
+            const valueContainer = document.createElement('span')
+            valueContainer.className = 'json-value'
+            summary.appendChild(valueContainer)
 
-          if (typeof value === 'object' && value !== null) {
-            summary.appendChild(document.createTextNode(` ${getTypeLabel(value)}`))
-            buildTree(value, details)
-          } else {
-            const valueSpan = document.createElement('span')
-            valueSpan.className = `json-value ${getTypeClass(value)}`
-            valueSpan.textContent = formatValue(value)
-            summary.appendChild(valueSpan) // Show value directly in summary
+            if (typeof value === 'object' && value !== null) {
+              const childUl = document.createElement('ul')
+              // childUl.className = 'json-tree hidden'
+              details.appendChild(childUl)
+              buildTree(value, childUl)
+            } else {
+              valueContainer.textContent = formatValue(value)
+              // details.classList.add('hidden')
+            }
           }
         }
       }
 
-      // Returns a type label for objects and arrays
-      function getTypeLabel(value) {
-        if (Array.isArray(value)) return `[Array (${value.length})]`
-        if (typeof value === 'object' && value !== null) {
-          return `{Object (${Object.keys(value).length})}`
-        }
-        return ''
-      }
-
-      // Returns a class name based on value type for styling
-      function getTypeClass(value) {
-        if (typeof value === 'string') return 'string'
-        if (typeof value === 'number') return 'number'
-        if (typeof value === 'boolean') return 'boolean'
-        if (value === null) return 'null'
-        return 'undefined'
-      }
-
-      // Formats the value for display
       function formatValue(value) {
-        if (typeof value === 'string') return `"${value}"`
-        if (typeof value === 'number') return value.toString()
-        if (typeof value === 'boolean') return value.toString()
-        if (value === null) return 'null'
-        return 'undefined'
+        if (typeof value === 'string') {
+          return `"${value}"`
+        } else if (typeof value === 'number') {
+          return value.toString()
+        } else if (typeof value === 'boolean') {
+          return value.toString()
+        } else if (value === null) {
+          return 'null'
+        } else {
+          return 'undefined'
+        }
       }
 
-      // Add basic CSS styling
+      // Basic CSS
       const style = document.createElement('style')
       style.textContent = `
       .json-tree {
-        margin-left: 20px;
+        list-style: none;
+        padding-left: 20px;
       }
-      .json-summary {
+      .json-node {
+        margin: 2px 0;
+      }
+      .json-toggle {
         cursor: pointer;
-        user-select: none;
+        margin-right: 5px;
       }
       .json-key {
         color: #a626a4; /* Purple for keys */
       }
       .json-value {
-        margin-left: 5px;
-      }
-      .json-value.string {
         color: #50a14f; /* Green for strings */
       }
       .json-value.number {
@@ -139,27 +109,26 @@
       .json-value.boolean, .json-value.null {
         color: #c18401; /* Orange for booleans and null */
       }
-      details.json-node {
-        margin-left: 20px;
-      }
-      summary.json-leaf {
-        cursor: default;
-      }
-      summary.json-leaf::-webkit-details-marker {
-        display: none; /* Hide toggle for leaf nodes */
+      .hidden {
+        display: none;
       }
     `
       document.head.appendChild(style)
 
-      // Example data to test
+      // Example usage
       const data = {
         name: 'John',
+        alive: true,
         age: 30,
         address: {
           street: '123 Main St',
           city: 'Anytown',
+          state: 'CA',
         },
-        hobbies: ['reading', 'gaming'],
+        phones: [
+          { type: 'home', number: '555-1234' },
+          { type: 'work', number: '555-5678' },
+        ],
       }
 
       const container = document.getElementById('json-tree')

@@ -6,6 +6,7 @@
   * {
     list-style: none;
     font-family: monospace;
+    font-size: 16px;
     line-height: 1.8;
   }
 
@@ -16,6 +17,8 @@
 
   data > ul {
     padding: 24px;
+    max-height: 600px;
+    overflow-y: scroll;
   }
 
   details {

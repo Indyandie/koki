@@ -3,63 +3,93 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Tree Viewer</title>
+    <title>Improved JSON Tree Viewer</title>
   </head>
   <body>
-    <h1>Genesis</h1>
-    <div id="json-tree">Hello</div>
+    <h1>V2</h1>
+    <div id="json-tree"></div>
 
     <script>
       function createJsonTree(data, container) {
-        const ul = document.createElement('ul')
-        ul.className = 'json-tree'
-        container.innerHTML = ''
-        container.appendChild(ul)
-        buildTree(data, ul)
+        const details = document.createElement('details')
+        details.className = 'json-tree'
+        container.appendChild(details)
+        buildTree(data, details)
       }
 
-      function buildTree(data, parentUl) {
-        if (typeof data === 'object' && data !== null) {
-          const isArray = Array.isArray(data)
-          const entries = isArray ? data.entries() : Object.entries(data)
-          for (const [key, value] of entries) {
-            const li = document.createElement('li')
-            li.className = 'json-node'
-            parentUl.appendChild(li)
+      function buildTree(data, parentDetails) {
+        const summary = document.createElement('summary')
+        summary.className = 'json-summary'
+        parentDetails.appendChild(summary)
 
-            const toggle = document.createElement('span')
-            toggle.className = 'json-toggle'
-            toggle.textContent = isArray ? '[...]' : '{...}'
-            li.appendChild(toggle)
+        if (Array.isArray(data)) {
+          summary.textContent = `[Array (${data.length})]`
+          buildArrayTree(data, parentDetails)
+        } else if (typeof data === 'object' && data !== null) {
+          const keys = Object.keys(data)
+          summary.textContent = `{Object (${keys.length})}`
+          buildObjectTree(data, parentDetails)
+        } else {
+          summary.textContent = formatValue(data)
+          summary.classList.add('json-leaf')
+        }
+      }
 
-            if (!isArray) {
-              const keySpan = document.createElement('span')
-              keySpan.className = 'json-key'
-              keySpan.textContent = `"${key}": `
-              li.appendChild(keySpan)
-            }
+      function buildArrayTree(array, parentDetails) {
+        array.forEach((item, index) => {
+          const details = document.createElement('details')
+          details.className = 'json-node'
+          parentDetails.appendChild(details)
 
-            const valueContainer = document.createElement('span')
-            valueContainer.className = 'json-value'
-            li.appendChild(valueContainer)
+          const summary = document.createElement('summary')
+          summary.className = 'json-summary'
+          summary.textContent = `[${index}]`
+          details.appendChild(summary)
 
-            if (typeof value === 'object' && value !== null) {
-              const childUl = document.createElement('ul')
-              childUl.className = 'json-tree hidden'
-              li.appendChild(childUl)
-              buildTree(value, childUl)
-              toggle.addEventListener('click', () => {
-                childUl.classList.toggle('hidden')
-                toggle.textContent = childUl.classList.contains('hidden')
-                  ? (isArray ? '[...]' : '{...}')
-                  : (isArray ? '[-]' : '{-}')
-              })
-            } else {
-              valueContainer.textContent = formatValue(value)
-              toggle.classList.add('hidden')
-            }
+          if (typeof item === 'object' && item !== null) {
+            buildTree(item, details)
+          } else {
+            const valueSpan = document.createElement('span')
+            valueSpan.className = 'json-value'
+            valueSpan.textContent = formatValue(item)
+            details.appendChild(valueSpan)
+          }
+        })
+      }
+
+      function buildObjectTree(obj, parentDetails) {
+        for (const [key, value] of Object.entries(obj)) {
+          const details = document.createElement('details')
+          details.className = 'json-node'
+          parentDetails.appendChild(details)
+
+          const summary = document.createElement('summary')
+          summary.className = 'json-summary'
+          const keyCode = document.createElement('code')
+          keyCode.className = 'json-key'
+          keyCode.textContent = `"${key}":`
+          summary.appendChild(keyCode)
+
+          if (typeof value === 'object' && value !== null) {
+            summary.appendChild(document.createTextNode(` ${getTypeLabel(value)}`))
+            buildTree(value, details)
+          } else {
+            const valueSpan = document.createElement('span')
+            valueSpan.className = 'json-value'
+            valueSpan.textContent = formatValue(value)
+            summary.appendChild(valueSpan)
           }
         }
+      }
+
+      function getTypeLabel(value) {
+        if (Array.isArray(value)) {
+          return `[Array (${value.length})]`
+        } else if (typeof value === 'object' && value !== null) {
+          const keys = Object.keys(value)
+          return `{Object (${keys.length})}`
+        }
+        return ''
       }
 
       function formatValue(value) {
@@ -80,15 +110,11 @@
       const style = document.createElement('style')
       style.textContent = `
       .json-tree {
-        list-style: none;
-        padding-left: 20px;
+        margin-left: 20px;
       }
-      .json-node {
-        margin: 2px 0;
-      }
-      .json-toggle {
+      .json-summary {
         cursor: pointer;
-        margin-right: 5px;
+        user-select: none;
       }
       .json-key {
         color: #a626a4; /* Purple for keys */
@@ -96,14 +122,11 @@
       .json-value {
         color: #50a14f; /* Green for strings */
       }
-      .json-value.number {
-        color: #986801; /* Brown for numbers */
+      details.json-node {
+        margin-left: 20px;
       }
-      .json-value.boolean, .json-value.null {
-        color: #c18401; /* Orange for booleans and null */
-      }
-      .hidden {
-        display: none;
+      summary.json-leaf {
+        cursor: default;
       }
     `
       document.head.appendChild(style)
@@ -111,17 +134,12 @@
       // Example usage
       const data = {
         name: 'John',
-        alive: true,
         age: 30,
         address: {
           street: '123 Main St',
           city: 'Anytown',
-          state: 'CA',
         },
-        phones: [
-          { type: 'home', number: '555-1234' },
-          { type: 'work', number: '555-5678' },
-        ],
+        hobbies: ['reading', 'gaming'],
       }
 
       const container = document.getElementById('json-tree')

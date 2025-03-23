@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="koki.css">
-    <title>Arbol</title>
+    <title>🌳 koki</title>
   </head>
   <body>
-    <h1>Refactor <code>0.0.2</code></h1>
+    <h1>🌳 koki</h1>
     <div id="json-tree">Hello</div>
     <div id="json-tree-2">Hello</div>
     <div id="json-tree-poke">Hello</div>
@@ -19,6 +19,8 @@
         alive: true,
         nothing: undefined,
         age: 30,
+        emptyObj: {},
+        emptyArr: [],
         address: {
           street: '123 Main St',
           city: 'Anytown',
@@ -42,6 +44,10 @@
           arr: [1, 1, 4, 'hello'],
           obj: { a: 'A', b: 'B', c: '3' },
         },
+        undefined,
+        null,
+        [],
+        {},
       ]
 
       const pokeUrl = 'https://pokeapi.co/api/v2/'
@@ -51,16 +57,16 @@
         const response = await fetch(url)
         const results = await response.json()
         const poke = document.getElementById('json-tree-poke')
-        createJsonTree(results, poke)
+        kokiInit(results, poke)
       }
 
       sendRequest()
 
       const container = document.getElementById('json-tree')
-      createJsonTree(data, container)
+      kokiInit(data, container)
 
       const container2 = document.getElementById('json-tree-2')
-      createJsonTree(dataArr, container2)
+      kokiInit(dataArr, container2)
     </script>
   </body>
 </html>

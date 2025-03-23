@@ -1,11 +1,22 @@
 .arbol-root {
-  font-family: 'Courier New', Courier, monospace;
   background: black;
   color: white;
-  padding: 16px;
+  margin-bottom: 24px;
+
+  & > details[open] {
+    padding-bottom: 16px;
+  }
 
   * {
     list-style: none;
+    font-family: monospace;
+    line-height: 1.8;
+  }
+
+  header {
+    padding: 8px 16px;
+    background: darkslategray;
+    margin-bottom: 24px;
   }
 
   details {
@@ -14,6 +25,12 @@
 
   var {
     color: goldenrod;
+    &::before {
+      content: "\"";
+    }
+    &::after {
+      content: "\":";
+    }
   }
 
   code.arbol-value {
@@ -23,6 +40,12 @@
   code.arbol-value.string {
     color: darkseagreen;
     font-weight: lighter;
+    &::before {
+      content: "\"";
+    }
+    &::after {
+      content: "\"";
+    }
   }
 
   code.arbol-value.boolean {
@@ -51,6 +74,6 @@
 }
 
 body {
-  background: gray;
-  color: lightblue;
+  background: #333;
+  color: #aaa;
 }

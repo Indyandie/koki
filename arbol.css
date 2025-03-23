@@ -1,0 +1,56 @@
+.arbol-root {
+  font-family: 'Courier New', Courier, monospace;
+  background: black;
+  color: white;
+  padding: 16px;
+
+  * {
+    list-style: none;
+  }
+
+  details {
+    color: lightgrey;
+  }
+
+  var {
+    color: goldenrod;
+  }
+
+  code.arbol-value {
+    color: lightsalmon;
+  }
+
+  code.arbol-value.string {
+    color: darkseagreen;
+    font-weight: lighter;
+  }
+
+  code.arbol-value.boolean {
+    color: deepskyblue;
+    font-weight: bolder;
+  }
+
+  code.arbol-value.number {
+    color: turquoise;
+    font-weight: bolder;
+  }
+
+  summary {
+    cursor: pointer;
+  }
+
+  details.arrobj {
+    summary {
+      font-weight: bolder;
+      small {
+        color: orchid;
+        font-weight: lighter;
+      }
+    }
+  }
+}
+
+body {
+  background: gray;
+  color: lightblue;
+}

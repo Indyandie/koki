@@ -3,122 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Tree Viewer</title>
+    <link rel="stylesheet" href="arbol.css">
+    <title>Arbol</title>
   </head>
   <body>
-    <h1>Refactor</h1>
+    <h1>Refactor <code>0.0.2</code></h1>
     <div id="json-tree">Hello</div>
-
+    <div id="json-tree-2">Hello</div>
+    <div id="json-tree-poke">Hello</div>
+    <script src="arbol-0-0-2.js"></script>
+    <!-- <script src="arbo-grok.js"></script> -->
     <script>
-      function createJsonTree(data, container) {
-        const ul = document.createElement('ul')
-        const details = document.createElement('details')
-        const summary = document.createElement('summary')
-        summary.innerHTML = 'Arbol (root)'
-        details.open = true
-        ul.className = 'json-tree'
-        ul.className = 'json-tree'
-        container.innerHTML = ''
-        container.appendChild(details)
-        details.appendChild(summary)
-        details.appendChild(ul)
-        buildTree(data, ul)
-      }
-
-      function buildTree(data, parentUl) {
-        if (typeof data === 'object' && data !== null) {
-          const isArray = Array.isArray(data)
-          const entries = isArray ? data.entries() : Object.entries(data)
-
-          for (const [key, value] of entries) {
-            const details = document.createElement('details')
-            details.className = 'json-node'
-            parentUl.appendChild(details)
-
-            const summary = document.createElement('summary')
-            summary.className = 'json-summary'
-            // summary.textContent = isArray ? '[...]' : '{...}'
-            details.appendChild(summary)
-
-            if (!isArray) {
-              const keySpan = document.createElement('var')
-              keySpan.className = 'json-key'
-              keySpan.textContent = `"${key} {Obj} ${Object.keys(value).length}"`
-              summary.appendChild(keySpan)
-            } else {
-              const keySpan = document.createElement('var')
-              keySpan.className = 'json-key'
-              keySpan.textContent = `"[Array] ${data.length}"`
-              summary.appendChild(keySpan)
-            }
-
-            const valueContainer = document.createElement('span')
-            valueContainer.className = 'json-value'
-            summary.appendChild(valueContainer)
-
-            if (typeof value === 'object' && value !== null) {
-              const childUl = document.createElement('ul')
-              // childUl.className = 'json-tree hidden'
-              details.appendChild(childUl)
-              buildTree(value, childUl)
-            } else {
-              valueContainer.textContent = formatValue(value)
-              // details.classList.add('hidden')
-            }
-          }
-        }
-      }
-
-      function formatValue(value) {
-        if (typeof value === 'string') {
-          return `"${value}"`
-        } else if (typeof value === 'number') {
-          return value.toString()
-        } else if (typeof value === 'boolean') {
-          return value.toString()
-        } else if (value === null) {
-          return 'null'
-        } else {
-          return 'undefined'
-        }
-      }
-
-      // Basic CSS
-      const style = document.createElement('style')
-      style.textContent = `
-      .json-tree {
-        list-style: none;
-        padding-left: 20px;
-      }
-      .json-node {
-        margin: 2px 0;
-      }
-      .json-toggle {
-        cursor: pointer;
-        margin-right: 5px;
-      }
-      .json-key {
-        color: #a626a4; /* Purple for keys */
-      }
-      .json-value {
-        color: #50a14f; /* Green for strings */
-      }
-      .json-value.number {
-        color: #986801; /* Brown for numbers */
-      }
-      .json-value.boolean, .json-value.null {
-        color: #c18401; /* Orange for booleans and null */
-      }
-      .hidden {
-        display: none;
-      }
-    `
-      document.head.appendChild(style)
-
       // Example usage
       const data = {
         name: 'John',
         alive: true,
+        nothing: undefined,
         age: 30,
         address: {
           street: '123 Main St',
@@ -131,8 +31,37 @@
         ],
       }
 
+      const dataArr = [
+        null,
+        true,
+        1,
+        3,
+        'hello',
+        {
+          name: 'Lobra',
+          num: 123,
+          arr: [1, 1, 4, 'hello'],
+          obj: { a: 'A', b: 'B', c: '3' },
+        },
+      ]
+
+      const pokeUrl = 'https://pokeapi.co/api/v2/'
+
+      async function sendRequest() {
+        const url = pokeUrl + 'pokemon/mew'
+        const response = await fetch(url)
+        const results = await response.json()
+        const poke = document.getElementById('json-tree-poke')
+        createJsonTree(results, poke)
+      }
+
+      sendRequest()
+
       const container = document.getElementById('json-tree')
       createJsonTree(data, container)
+
+      const container2 = document.getElementById('json-tree-2')
+      createJsonTree(dataArr, container2)
     </script>
   </body>
 </html>

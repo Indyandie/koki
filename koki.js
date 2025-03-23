@@ -28,7 +28,8 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false) {
 
     const isArray = Array.isArray(data)
     const type = isArray ? 'array' : 'object'
-    const size = isArray ? '[' + data.length + ']' : '{' + Object.keys(data).length + '}'
+    const length = isArray ? data.length : Object.keys(data).length
+    const size = isArray ? '[' + length + ']' : '{' + length + '}'
     const entries = isArray ? data.entries() : Object.entries(data)
 
     li.className = 'arbol-type' - type
@@ -37,7 +38,8 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false) {
     details.open = true
     const summary = document.createElement('summary')
 
-    const arrObjSize = (entries < 1) ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`
+    const arrObjSize = (length === 0) ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`
+    console.log(length, entries, keyName)
     summary.innerHTML = `${
       (parentArr ||
           keyName === 'arr' || keyName == false || keyName === 'obj')

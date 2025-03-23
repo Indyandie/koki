@@ -1,14 +1,23 @@
 function kokiInit(data, container, openDetails = true, kokiTitle = 'koki') {
-  const ul = document.createElement('ul')
-  const details = document.createElement('details')
-  const summary = document.createElement('summary')
-  summary.innerHTML = `<header><h2>${kokiTitle}</h2></header>`
-  details.open = true
   container.className = 'arbol-root'
   container.innerHTML = ''
+
+  const details = document.createElement('details')
+  details.open = true
+
+  const summary = document.createElement('summary')
+  summary.innerHTML = `<header><h2>${kokiTitle}</h2></header>`
+
+  const dataElem = document.createElement('data')
+  dataElem.value = JSON.stringify(data)
+
+  const ul = document.createElement('ul')
+
   container.appendChild(details)
   details.appendChild(summary)
-  details.appendChild(ul)
+  details.appendChild(dataElem)
+  dataElem.appendChild(ul)
+
   kokiArbol(data, ul, '')
 }
 

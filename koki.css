@@ -3,10 +3,6 @@
   color: white;
   margin-bottom: 24px;
 
-  & > details[open] {
-    padding-bottom: 16px;
-  }
-
   * {
     list-style: none;
     font-family: monospace;
@@ -16,7 +12,10 @@
   header {
     padding: 8px 16px;
     background: darkslategray;
-    margin-bottom: 24px;
+  }
+
+  data > ul {
+    padding: 24px;
   }
 
   details {

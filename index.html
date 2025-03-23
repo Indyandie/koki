@@ -3,20 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Improved JSON Tree Viewer</title>
+    <title>JSON Tree Viewer</title>
   </head>
   <body>
-    <h1>V2</h1>
+    <h1>V3</h1>
     <div id="json-tree"></div>
 
     <script>
+      // Creates the JSON tree and attaches it to the container
       function createJsonTree(data, container) {
         const details = document.createElement('details')
         details.className = 'json-tree'
+        details.open = true // Open by default for top level
         container.appendChild(details)
         buildTree(data, details)
       }
 
+      // Builds the tree based on the data type
       function buildTree(data, parentDetails) {
         const summary = document.createElement('summary')
         summary.className = 'json-summary'
@@ -35,6 +38,7 @@
         }
       }
 
+      // Handles array elements
       function buildArrayTree(array, parentDetails) {
         array.forEach((item, index) => {
           const details = document.createElement('details')
@@ -44,19 +48,20 @@
           const summary = document.createElement('summary')
           summary.className = 'json-summary'
           summary.textContent = `[${index}]`
-          details.appendChild(summary)
 
           if (typeof item === 'object' && item !== null) {
+            summary.appendChild(document.createTextNode(` ${getTypeLabel(item)}`))
             buildTree(item, details)
           } else {
             const valueSpan = document.createElement('span')
-            valueSpan.className = 'json-value'
+            valueSpan.className = `json-value ${getTypeClass(item)}`
             valueSpan.textContent = formatValue(item)
-            details.appendChild(valueSpan)
+            summary.appendChild(valueSpan) // Show value directly in summary
           }
         })
       }
 
+      // Handles object properties
       function buildObjectTree(obj, parentDetails) {
         for (const [key, value] of Object.entries(obj)) {
           const details = document.createElement('details')
@@ -75,38 +80,41 @@
             buildTree(value, details)
           } else {
             const valueSpan = document.createElement('span')
-            valueSpan.className = 'json-value'
+            valueSpan.className = `json-value ${getTypeClass(value)}`
             valueSpan.textContent = formatValue(value)
-            summary.appendChild(valueSpan)
+            summary.appendChild(valueSpan) // Show value directly in summary
           }
         }
       }
 
+      // Returns a type label for objects and arrays
       function getTypeLabel(value) {
-        if (Array.isArray(value)) {
-          return `[Array (${value.length})]`
-        } else if (typeof value === 'object' && value !== null) {
-          const keys = Object.keys(value)
-          return `{Object (${keys.length})}`
+        if (Array.isArray(value)) return `[Array (${value.length})]`
+        if (typeof value === 'object' && value !== null) {
+          return `{Object (${Object.keys(value).length})}`
         }
         return ''
       }
 
-      function formatValue(value) {
-        if (typeof value === 'string') {
-          return `"${value}"`
-        } else if (typeof value === 'number') {
-          return value.toString()
-        } else if (typeof value === 'boolean') {
-          return value.toString()
-        } else if (value === null) {
-          return 'null'
-        } else {
-          return 'undefined'
-        }
+      // Returns a class name based on value type for styling
+      function getTypeClass(value) {
+        if (typeof value === 'string') return 'string'
+        if (typeof value === 'number') return 'number'
+        if (typeof value === 'boolean') return 'boolean'
+        if (value === null) return 'null'
+        return 'undefined'
       }
 
-      // Basic CSS
+      // Formats the value for display
+      function formatValue(value) {
+        if (typeof value === 'string') return `"${value}"`
+        if (typeof value === 'number') return value.toString()
+        if (typeof value === 'boolean') return value.toString()
+        if (value === null) return 'null'
+        return 'undefined'
+      }
+
+      // Add basic CSS styling
       const style = document.createElement('style')
       style.textContent = `
       .json-tree {
@@ -120,7 +128,16 @@
         color: #a626a4; /* Purple for keys */
       }
       .json-value {
+        margin-left: 5px;
+      }
+      .json-value.string {
         color: #50a14f; /* Green for strings */
+      }
+      .json-value.number {
+        color: #986801; /* Brown for numbers */
+      }
+      .json-value.boolean, .json-value.null {
+        color: #c18401; /* Orange for booleans and null */
       }
       details.json-node {
         margin-left: 20px;
@@ -128,10 +145,13 @@
       summary.json-leaf {
         cursor: default;
       }
+      summary.json-leaf::-webkit-details-marker {
+        display: none; /* Hide toggle for leaf nodes */
+      }
     `
       document.head.appendChild(style)
 
-      // Example usage
+      // Example data to test
       const data = {
         name: 'John',
         age: 30,

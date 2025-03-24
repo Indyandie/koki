@@ -1,5 +1,5 @@
 function kokiInit(data, container, openDetails = true, kokiTitle = 'koki') {
-  container.className = 'arbol-root'
+  container.classList.add('arbol-root')
   container.innerHTML = ''
 
   const details = document.createElement('details')
@@ -41,7 +41,7 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false, openDetail
     li.className = 'arbol-type' - type
     const details = document.createElement('details')
     details.className = 'arrobj'
-    details.open = openDetails && (level < 3) ? true : false
+    details.open = length < 10 || (openDetails && (level < 2)) ? true : false
     const summary = document.createElement('summary')
 
     const arrObjSize = (length === 0) ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`
@@ -58,7 +58,7 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false, openDetail
     const ul = document.createElement('ul')
     for (const [key, value] of entries) {
       if (typeof value === 'object' && data !== null) {
-        kokiArbol(value, ul, key, isArray, openDetails, level++)
+        kokiArbol(value, ul, key, isArray, openDetails, level + 1)
       } else {
         const liEntry = document.createElement('li')
         const format = kokiGetType(value)

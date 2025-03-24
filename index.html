@@ -12,12 +12,31 @@
         background: #333;
         color: #aaa;
       }
+
+      .htmlly {
+        --arbol-header-bg: black;
+        --arbol-header-text-color: navajowhite;
+        --arbol-bg-color: midnightblue;
+        --arbol-text-color: antiquewhite;
+        --arbol--text-font: sans-serif;
+        --arbol--text-size: 17px;
+        --arbol-code-text-font: 'Jetbrains Mono', monospace;
+        --arbol-code-text-size: 13px;
+        --arbol-code-text-color: ghostwhite;
+        --arbol-code-variable: orange;
+        --arbol-code-value: powderblue;
+        --arbol-code-numeric: cyan;
+        --arbol-code-bool: dodgerblue;
+        --arbol-code-string: darkseagreen;
+        --arbol-code-undefined: darkgray;
+        --arbol-code-misc: lightgoldenrodyellow;
+      }
     </style>
 
     <h1>🌳 koki</h1>
     <div id="json-tree">Hello</div>
-    <div id="json-tree-2">Hello</div>
-    <div id="json-tree-poke">Hello</div>
+    <div id="json-tree-2" class="htmlly">Hello</div>
+    <div id="json-tree-poke" class="kurokula">Hello</div>
     <script src="koki.js"></script>
     <script>
       // Example usage
@@ -64,16 +83,16 @@
         const response = await fetch(url)
         const results = await response.json()
         const poke = document.getElementById('json-tree-poke')
-        kokiInit(results, poke)
+        kokiInit(results, poke, false, 'Pokemon (mew) - kurokula theme')
       }
 
       sendRequest()
 
       const container = document.getElementById('json-tree')
-      kokiInit(data, container)
+      kokiInit(data, container, true, 'JSON (Object)')
 
       const container2 = document.getElementById('json-tree-2')
-      kokiInit(dataArr, container2)
+      kokiInit(dataArr, container2, false, 'JSON (Array) - theme override')
     </script>
   </body>
 </html>

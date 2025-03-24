@@ -4,9 +4,9 @@ A meat and potatoes JSON tree viewer.
 
 ## To Do
 
-- [ ] copy to clipboard
-- [ ] customizable styles
-- [ ] web component
 - [ ] user manual
 - [ ] JS-Docs
+- [ ] copy to clipboard
 - [ ] Make it faster and lighter
+- [ ] web component
+- [x] customizable styles

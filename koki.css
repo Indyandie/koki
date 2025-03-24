@@ -10,8 +10,14 @@
     line-height: 1.8;
   }
 
+  summary {
+    cursor: pointer;
+  }
+
   & > details {
+    color: lightgrey;
     position: relative;
+
     & > summary {
       header {
         padding: 8px 16px;
@@ -37,77 +43,66 @@
     label:has(input:not(:checked)) ~ pre {
       display: none;
     }
-  }
 
-  & > details > pre {
-    margin: 0;
-    padding: 24px;
-    max-height: 600px;
-    overflow: scroll;
-  }
-
-  data > ul {
-    padding: 24px;
-    margin: 0;
-    max-height: 600px;
-    overflow-y: scroll;
-  }
-
-  details {
-    color: lightgrey;
-  }
-
-  var {
-    color: goldenrod;
-    &::before {
-      content: "\"";
+    & > pre {
+      margin: 0;
+      padding: 24px;
+      max-height: 600px;
+      overflow: scroll;
     }
-    &::after {
-      content: "\":";
-    }
-  }
 
-  code.arbol-value {
-    color: lightsalmon;
-  }
+    data > ul {
+      padding: 24px;
+      margin: 0;
+      max-height: 600px;
+      overflow-y: scroll;
 
-  code.arbol-value.string {
-    color: darkseagreen;
-    font-weight: lighter;
-    &::before {
-      content: "\"";
-    }
-    &::after {
-      content: "\"";
-    }
-  }
+      details.arrobj {
+        summary {
+          font-weight: bolder;
+          small {
+            color: orchid;
+            font-weight: lighter;
+          }
+        }
+      }
 
-  code.arbol-value.boolean {
-    color: deepskyblue;
-    font-weight: bolder;
-  }
+      var {
+        color: goldenrod;
+        &::before {
+          content: "\"";
+        }
+        &::after {
+          content: "\":";
+        }
+      }
 
-  code.arbol-value.number {
-    color: turquoise;
-    font-weight: bolder;
-  }
+      code.arbol-value {
+        color: lightsalmon;
+      }
 
-  summary {
-    cursor: pointer;
-  }
-
-  details.arrobj {
-    summary {
-      font-weight: bolder;
-      small {
-        color: orchid;
+      code.arbol-value.string {
+        color: darkseagreen;
         font-weight: lighter;
+        &::before {
+          content: "\"";
+        }
+        &::after {
+          content: "\"";
+        }
+      }
+
+      code.arbol-value.boolean {
+        color: deepskyblue;
+        font-weight: bolder;
+      }
+
+      code.arbol-value.number {
+        color: turquoise;
+        font-weight: bolder;
       }
     }
   }
+
 }
 
-body {
-  background: #333;
-  color: #aaa;
-}

@@ -37,11 +37,12 @@ function kokiArbol(data, parentUl, keyName = null, parentArr = false, openDetail
     const length = isArray ? data.length : Object.keys(data).length
     const size = isArray ? '[' + length + ']' : '{' + length + '}'
     const entries = isArray ? data.entries() : Object.entries(data)
+    openDetails = level === 0 && openDetails || openDetails && level < 2 ? true : false
 
     li.className = 'arbol-type' - type
     const details = document.createElement('details')
     details.className = 'arrobj'
-    details.open = length < 10 || (openDetails && (level < 2)) ? true : false
+    details.open = openDetails
     const summary = document.createElement('summary')
 
     const arrObjSize = (length === 0) ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`

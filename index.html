@@ -34,9 +34,11 @@
     </style>
 
     <h1>🌳 koki</h1>
+
     <div id="json-tree">Hello</div>
     <div id="json-tree-2" class="htmlly">Hello</div>
     <div id="json-tree-poke" class="kurokula">Hello</div>
+
     <script src="koki.js"></script>
     <script>
       // Example usage
@@ -44,6 +46,7 @@
         name: 'John',
         alive: true,
         nothing: undefined,
+        nully: null,
         age: 30,
         emptyObj: {},
         emptyArr: [],
@@ -78,12 +81,14 @@
 
       const pokeUrl = 'https://pokeapi.co/api/v2/'
 
+      const poke = document.getElementById('json-tree-poke')
+      kokiInit([], poke, false, 'Pokemon (mew) - kurokula theme')
+
       async function sendRequest() {
         const url = pokeUrl + 'pokemon/mew'
         const response = await fetch(url)
         const results = await response.json()
-        const poke = document.getElementById('json-tree-poke')
-        kokiInit(results, poke, false, 'Pokemon (mew) - kurokula theme')
+        kokiInit(results, poke, true, 'Pokemon (mew) - kurokula theme')
       }
 
       sendRequest()

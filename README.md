@@ -1,4 +1,4 @@
-# 🌳 koki (JSON tree viewer)
+# 🌳 koki
 
 A meat and potatoes JSON tree viewer.
 

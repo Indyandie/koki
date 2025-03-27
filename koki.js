@@ -20,7 +20,6 @@ function kokiInit(data, container, openDetails = true, kokiTitle = 'koki') {
 
   pre.appendChild(code)
 
-  // kokiArbol(data, ul, '', false, openDetails)
   const fragment = kokiArbol(data, '', false, openDetails)
 
   ul.appendChild(fragment)
@@ -70,7 +69,6 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
       } else {
         const liEntry = document.createElement('li')
         const format = kokiGetType(value)
-        console.log(key, value)
 
         liEntry.className = 'arbol-type' - format
         liEntry.innerHTML = `${isArray ? '' : '<var>' + key + '</var> '}<code class="arbol-value ${format}">${value}</code> (${format})`

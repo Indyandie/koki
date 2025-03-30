@@ -1,4 +1,4 @@
-function kokiInit(data, container, openDetails = true, kokiTitle = 'koki') {
+function kokiInit(data, container, kokiTitle = 'koki', openDetails = true) {
   container.classList.add('arbol-root')
   container.innerHTML = ''
 

@@ -17,14 +17,18 @@ A 🍖 meat and 🥔 potatoes **JSON tree viewer**.
 <div id="koki">Hello</div>
 ```
 
-3. Run the `kokiInit()` function with **data** (`object` or `array`) and an **container element** as arguments.
+3. Run the `kokiInit()` function with a **data** (`object` or `array`) and a **container element** as arguments. Optionally you pass a string to add a custom title (default is `"koki"`), and a boolean to set the open state of the main root object/array (default is `true`).
 
 ```html
 <script>
-  const data = { key: 123 };
+  // data object
+  const data = { num: 123, obj: [1, "a", null, undefined] };
 
+  // container element
   const container = document.getElementById("koki");
-  kokiInit(data, container);
+
+  // Running the function to create the JSON tree
+  kokiInit(data, container, "Example JSON Tree", false);
 </script>
 ```
 

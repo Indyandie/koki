@@ -103,7 +103,91 @@
       <section>
         <h3>Styling</h3>
 
-        <div id="json-tree-2" class="htmlly">Hello</div>
+        <section>
+          <h4>CSS Variables</h4>
+          <p>
+            The main styles can be customized using the following CSS variables. All the default colors use <strong>HTML color
+              names</strong>.
+          </p>
+          <div class="sourceCode" id="cb1">
+            <pre
+              class="sourceCode css"
+            >
+<code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Header */</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>--arbol-header-bg<span class="in">:</span> black;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>--arbol-header-text-color<span class="in">:</span> whitesmoke;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">/* General */</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>--arbol-bg-color<span class="in">:</span> black;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>--arbol-text-color<span class="in">:</span> white;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>--arbol--text-font<span class="in">:</span> serif;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>--arbol--text-size<span class="in">:</span> 16px;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">/* Code */</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>--arbol-code-text-font<span class="in">:</span> monospace;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>--arbol-code-text-size<span class="in">:</span> 14px;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>--arbol-code-text-color<span class="in">:</span> gray;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>--arbol-code-variable<span class="in">:</span> ghostwhite;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>--arbol-code-value<span class="in">:</span> lightblue;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>--arbol-code-numeric<span class="in">:</span> turquoise;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>--arbol-code-bool<span class="in">:</span> deepskyblue;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>--arbol-code-string<span class="in">:</span> dodgerblue;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>--arbol-code-undefined<span class="in">:</span> darkseagreen;</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>--arbol-code-misc<span class="in">:</span> orchid;</span></code></pre
+            >
+          </div>
+
+          <section>
+            <h5>Example</h5>
+            <p>
+              Define the CSS variable under a class or any other selector that target the <strong>container element</strong>.
+            </p>
+            <div class="sourceCode" id="cb1">
+              <pre
+                class="sourceCode html"
+              >
+<code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.htmlly</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-header-bg</span><span class="ch">:</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-header-text-color</span><span class="ch">:</span> <span class="cn">navajowhite</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-bg-color</span><span class="ch">:</span> <span class="cn">midnightblue</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-text-color</span><span class="ch">:</span> <span class="cn">antiquewhite</span><span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol--text-font</span><span class="ch">:</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol--text-size</span><span class="ch">:</span> <span class="dv">17</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-text-font</span><span class="ch">:</span> <span class="st">&quot;Jetbrains Mono&quot;</span><span class="op">,</span> <span class="dv">monospace</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-text-size</span><span class="ch">:</span> <span class="dv">13</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-text-color</span><span class="ch">:</span> <span class="cn">ghostwhite</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-variable</span><span class="ch">:</span> <span class="cn">orange</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-value</span><span class="ch">:</span> <span class="cn">powderblue</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-numeric</span><span class="ch">:</span> <span class="cn">cyan</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-bool</span><span class="ch">:</span> <span class="cn">dodgerblue</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-string</span><span class="ch">:</span> <span class="cn">darkseagreen</span><span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-undefined</span><span class="ch">:</span> <span class="cn">darkgray</span><span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">--arbol-code-misc</span><span class="ch">:</span> <span class="cn">lightgoldenrodyellow</span><span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;theme-override&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;htmlly&quot;</span><span class="dt">&gt;</span>Hello<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre
+              >
+            </div>
+            <div id="theme-override" class="htmlly">Hello</div>
+          </section>
+        </section>
+      </section>
+
+      <section>
+        <h4>Built-in Theme</h4>
+
+        <p>
+          At the moment there is only one theme (<strong>kurokula</strong>). Apply by adding the <strong><code>kurakula</code
+            ></strong> class to the
+          <strong>container element</strong>.
+        </p>
+        <pre
+          class="sourceCode html"
+        ><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;json-tree-poke&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;kurokula&quot;</span><span class="dt">&gt;</span>Hello<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre
+        >
+
         <div id="json-tree-poke" class="kurokula">Hello</div>
       </section>
     </section>
@@ -147,6 +231,12 @@
         {},
       ]
 
+      const container = document.getElementById('json-tree')
+      kokiInit(data, container, true, 'JSON (Object)')
+
+      const container2 = document.getElementById('theme-override')
+      kokiInit(dataArr, container2, false, 'JSON (Array) - theme override')
+
       const pokeUrl = 'https://pokeapi.co/api/v2/'
 
       const poke = document.getElementById('json-tree-poke')
@@ -160,12 +250,6 @@
       }
 
       sendRequest()
-
-      const container = document.getElementById('json-tree')
-      kokiInit(data, container, true, 'JSON (Object)')
-
-      const container2 = document.getElementById('json-tree-2')
-      kokiInit(dataArr, container2, false, 'JSON (Array) - theme override')
     </script>
   </body>
 </html>

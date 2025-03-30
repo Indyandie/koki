@@ -4,7 +4,7 @@ A meat and potatoes JSON tree viewer.
 
 ## Usage
 
-1. Download and include the JS and CSS files.
+1. Download and include the [JS](https://raw.githubusercontent.com/Indyandie/koki/refs/heads/main/koki.js) and [CSS](https://raw.githubusercontent.com/Indyandie/koki/refs/heads/main/koki.css) files.
 
 ```html
 <link rel="stylesheet" href="koki.css">

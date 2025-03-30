@@ -40,7 +40,7 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
     const length = isArray ? data.length : Object.keys(data).length
     const size = isArray ? '[' + length + ']' : '{' + length + '}'
     const entries = isArray ? data.entries() : Object.entries(data)
-    openDetails = level === 0 && openDetails || openDetails && level < 2 ? true : false
+    openDetails = (level === 0 && openDetails) || (openDetails && level < 2 && length < 17) ? true : false
 
     li.className = 'arbol-type' - type
 
@@ -53,7 +53,7 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
 
     summary.innerHTML = `${
       (level === 0 || parentArr) // ||
-          //level > 0 && (keyName === 'arr' || keyName == false || keyName === 'obj'))
+        //level > 0 && (keyName === 'arr' || keyName == false || keyName === 'obj'))
         ? ''
         : '<var>' + keyName + '</var> '
     }(${type}) ${arrObjSize}`

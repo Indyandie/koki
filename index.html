@@ -41,12 +41,54 @@
           font-size: 24px;
         }
 
-        pre:has(code) {
+        ol {
+          padding-left: 16px;
+        }
+
+        pre.sourceCode:has(code) {
           font-size: 16px;
           line-height: 1.4;
           background: black;
           color: white;
           padding: 24px;
+          overflow: scroll;
+          max-height: 400px;
+
+          .co {
+            color: lightslategray;
+          }
+
+          .kw {
+            color: dodgerblue;
+          }
+
+          .st {
+            color: darkseagreen;
+          }
+
+          .ot {
+            color: lightsteelblue;
+          }
+
+          .op {
+            color: dimgray;
+          }
+
+          .dt {
+            color: lightgray;
+          }
+
+          .fu {
+            color: darksalmon;
+          }
+
+          .bu {
+            color: darkturquoise;
+          }
+
+          .dv {
+            color: aqua;
+          }
         }
       }
 

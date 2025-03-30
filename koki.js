@@ -52,8 +52,8 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
     const arrObjSize = length === 0 ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`
 
     summary.innerHTML = `${
-      (parentArr ||
-          keyName === 'arr' || keyName == false || keyName === 'obj')
+      (level === 0 || parentArr) // ||
+          //level > 0 && (keyName === 'arr' || keyName == false || keyName === 'obj'))
         ? ''
         : '<var>' + keyName + '</var> '
     }(${type}) ${arrObjSize}`

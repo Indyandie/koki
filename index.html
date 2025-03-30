@@ -255,10 +255,10 @@
       ]
 
       const container = document.getElementById('json-tree')
-      kokiInit(data, container, true, 'JSON (Object)')
+      kokiInit(data, container, true, 'JSON Object')
 
       const container2 = document.getElementById('theme-override')
-      kokiInit(dataArr, container2, false, 'JSON (Array) - theme override')
+      kokiInit(dataArr, container2, false, 'JSON Array - theme override')
 
       const pokeUrl = 'https://pokeapi.co/api/v2/'
 
@@ -266,10 +266,10 @@
       kokiInit([], poke, false, 'Pokemon (mew) - kurokula theme')
 
       async function sendRequest() {
-        const url = pokeUrl + 'pokemon/mew'
+        const url = pokeUrl + 'pokemon/sudowoodo'
         const response = await fetch(url)
         const results = await response.json()
-        kokiInit(results, poke, true, 'Pokemon (mew) - kurokula theme')
+        kokiInit(results, poke, true, 'Pokemon (sudowoodo) - kurokula theme')
       }
 
       sendRequest()

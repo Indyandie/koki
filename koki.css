@@ -10,6 +10,9 @@
   * {
     list-style: none;
   }
+  *::-webkit-details-marker {
+    display: none;
+  }
 
   summary {
     cursor: pointer;

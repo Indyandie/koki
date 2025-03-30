@@ -23,7 +23,7 @@
     & > summary {
       header {
         padding: 16px;
-        background: var(--arbol-header-bg, darkslategray);
+        background: var(--arbol-header-bg, black);
         color: var(--arbol-header-text-color, whitesmoke);
         font-family: var(--font-fam);
         line-height: 1.2;

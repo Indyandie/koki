@@ -1,6 +1,6 @@
 # 🌳 koki
 
-A meat and potatoes JSON tree viewer.
+A 🍖 meat and 🥔 potatoes **JSON tree viewer**.
 
 ## Usage
 

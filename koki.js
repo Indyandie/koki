@@ -36,46 +36,47 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
 
   if (typeof data === 'object' && data !== null) {
     const isArray = Array.isArray(data)
-    const type = isArray ? 'array' : 'object'
+    const type = isArray ? '[array]' : '{object}'
     const length = isArray ? data.length : Object.keys(data).length
-    const size = isArray ? '[' + length + ']' : '{' + length + '}'
     const entries = isArray ? data.entries() : Object.entries(data)
     openDetails = (level === 0 && openDetails) || (openDetails && level < 2 && length < 17) ? true : false
 
     li.className = 'arbol-type' - type
 
-    const details = document.createElement('details')
-    details.className = 'arrobj'
-    details.open = openDetails
+    const arrObjSize = length === 0 ? '<small style="color: gray">empty</small>' : `<small>${length} ${isArray ? 'items' : 'keys'}</small>`
+    const arrObjInnerHtml = `${(level === 0 || parentArr) ? '' : '<var>' + keyName + '</var> '}${type} ${arrObjSize}`
 
-    const summary = document.createElement('summary')
-    const arrObjSize = length === 0 ? '<small style="color: gray">empty</small>' : `<small>${size} ${isArray ? 'items' : 'keys'}</small>`
+    if (length >= 1) {
+      const details = document.createElement('details')
+      details.className = 'arrobj'
+      details.open = openDetails
 
-    summary.innerHTML = `${
-      (level === 0 || parentArr) // ||
-        //level > 0 && (keyName === 'arr' || keyName == false || keyName === 'obj'))
-        ? ''
-        : '<var>' + keyName + '</var> '
-    }(${type}) ${arrObjSize}`
+      const summary = document.createElement('summary')
 
-    details.appendChild(summary)
-    li.appendChild(details)
+      summary.innerHTML = arrObjInnerHtml
 
-    const ul = document.createElement('ul')
-    for (const [key, value] of entries) {
-      if (typeof value === 'object' && value !== null) {
-        const fragment = kokiArbol(value, key, isArray, openDetails, level + 1)
-        ul.appendChild(fragment)
-      } else {
-        const liEntry = document.createElement('li')
-        const format = kokiGetType(value)
+      details.appendChild(summary)
+      li.appendChild(details)
 
-        liEntry.className = 'arbol-type' - format
-        liEntry.innerHTML = `${isArray ? '' : '<var>' + key + '</var> '}<code class="arbol-value ${format}">${value}</code> (${format})`
-        ul.appendChild(liEntry)
+      const ul = document.createElement('ul')
+      for (const [key, value] of entries) {
+        if (typeof value === 'object' && value !== null) {
+          const fragment = kokiArbol(value, key, isArray, openDetails, level + 1)
+          ul.appendChild(fragment)
+        } else {
+          const liEntry = document.createElement('li')
+          const format = kokiGetType(value)
+
+          liEntry.className = 'arbol-type' - format
+          liEntry.innerHTML = `${isArray ? '' : '<var>' + key + '</var> '}<code class="arbol-value ${format}">${value}</code> (${format})`
+          ul.appendChild(liEntry)
+        }
       }
+      details.appendChild(ul)
+    } else {
+      li.className = 'arbol-type' - type
+      li.innerHTML = arrObjInnerHtml
     }
-    details.appendChild(ul)
   }
 
   return fragment

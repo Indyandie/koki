@@ -22,7 +22,7 @@ A 🍖 meat and 🥔 potatoes **JSON tree viewer**.
 ```html
 <script>
   // data object
-  const data = { num: 123, obj: [1, "a", null, undefined] };
+  const data = { num: 123, arr: [1, "a", null, undefined] };
 
   // container element
   const container = document.getElementById("koki");

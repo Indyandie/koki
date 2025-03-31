@@ -36,15 +36,15 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
 
   if (typeof data === 'object' && data !== null) {
     const isArray = Array.isArray(data)
-    const type = isArray ? '[array]' : '{object}'
+    const type = isArray ? 'array' : 'object'
     const length = isArray ? data.length : Object.keys(data).length
     const entries = isArray ? data.entries() : Object.entries(data)
     openDetails = (level === 0 && openDetails) || (openDetails && level < 2 && length < 17) ? true : false
 
-    li.className = 'arbol-type' - type
+    li.className = `arbol-type-${type}`
 
     const arrObjSize = length === 0 ? '<small style="color: gray">empty</small>' : `<small>${length} ${isArray ? 'items' : 'keys'}</small>`
-    const arrObjInnerHtml = `${(level === 0 || parentArr) ? '' : '<var>' + keyName + '</var> '}${type} ${arrObjSize}`
+    const arrObjInnerHtml = `${(level === 0 || parentArr) ? '' : '<var>' + keyName + '</var> '}(${type}) ${arrObjSize}`
 
     if (length >= 1) {
       const details = document.createElement('details')
@@ -67,14 +67,13 @@ function kokiArbol(data, keyName = null, parentArr = false, openDetails = true, 
           const liEntry = document.createElement('li')
           const format = kokiGetType(value)
 
-          liEntry.className = 'arbol-type' - format
+          liEntry.className = `arbol-type-${format}`
           liEntry.innerHTML = `${isArray ? '' : '<var>' + key + '</var> '}<code class="arbol-value ${format}">${value}</code> (${format})`
           ul.appendChild(liEntry)
         }
       }
       details.appendChild(ul)
     } else {
-      li.className = 'arbol-type' - type
       li.innerHTML = arrObjInnerHtml
     }
   }

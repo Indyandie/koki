@@ -23,7 +23,7 @@ function kokiInit(data, container, kokiTitle = 'koki', openDetails = true) {
   const fragment = kokiArbol(data, '', false, openDetails)
 
   ul.appendChild(fragment)
-  details.innerHTML = `<label><input type="checkbox">JSON</label>`
+  details.innerHTML = `<label><input type="checkbox"></label>`
   details.append(summary, pre, dataElem)
   dataElem.appendChild(ul)
   container.append(details)

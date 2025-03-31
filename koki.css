@@ -6,12 +6,19 @@
   font-family: var(--font-fam);
   line-height: 1.8;
   margin-bottom: 24px;
+  transition: all 0.25s ease-out;
 
   * {
     list-style: none;
+    transition: all 0.25s ease-out;
   }
+
   *::-webkit-details-marker {
     display: none;
+  }
+
+  ul {
+    padding-left: 16px;
   }
 
   summary {
@@ -39,23 +46,48 @@
       }
     }
 
-    label {
+    label:has(input) {
       cursor: pointer;
       position: absolute;
       right: 0;
       margin-right: 23px;
       margin-top: 24px;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      background: var(--arbol-header-bg, gray);
+      color: var(--arbol-text-color, antiquewhite);
+      opacity: 0.5;
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+
+      &:hover {
+        color: var(--arbol-header-text-color, white);
+        opacity: 0.8;
+      }
+
       input {
-        cursor: pointer;
+        display: none;
       }
     }
 
-    label:has(input:checked) ~ data {
-      display: none;
+    label:has(input:checked) {
+      &::before {
+        content: "Show JSON Tree";
+      }
+      & ~ data {
+        display: none;
+      }
     }
 
-    label:has(input:not(:checked)) ~ pre {
-      display: none;
+    label:has(input:not(:checked)) {
+      &::before {
+        content: "Show Raw JSON";
+      }
+      & ~ pre {
+        display: none;
+      }
     }
 
     & > pre {

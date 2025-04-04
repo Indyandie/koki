@@ -1,4 +1,6 @@
-function kokiInit(data, container, kokiTitle = 'koki', openDetails = true) {
+function kokiInit(jsonString, container, kokiTitle = 'koki', openDetails = true) {
+  parsedData = JSON.parse(jsonString)
+  jsonString = JSON.stringify(parsedData, null, 2)
   container.classList.add('arbol-root')
   container.innerHTML = ''
 
@@ -9,18 +11,18 @@ function kokiInit(data, container, kokiTitle = 'koki', openDetails = true) {
   summary.innerHTML = `<header><h2>${kokiTitle}</h2></header>`
 
   const dataElem = document.createElement('data')
-  dataElem.value = JSON.stringify(data)
+  dataElem.value = jsonString
 
   const ul = document.createElement('ul')
 
   const code = document.createElement('code')
-  code.innerHTML = JSON.stringify(data, null, 2)
+  code.innerHTML = jsonString
 
   const pre = document.createElement('pre')
 
   pre.appendChild(code)
 
-  const fragment = kokiArbol(data, '', false, openDetails)
+  const fragment = kokiArbol(parsedData, '', false, openDetails)
 
   ul.appendChild(fragment)
   details.innerHTML = `<label><input type="checkbox"></label>`
